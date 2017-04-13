@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <p>Welcome to sightseeing near BTS</p>
         <ul>
             <li v-for="data in datas" v-if="data.btsStation && data.placeID">
@@ -37,3 +37,9 @@ Vue.use(VueAxios, axios)
         }
     }
 </script>
+
+<style>
+.main {
+    margin-left: 300px;
+}
+</style>
