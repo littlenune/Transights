@@ -92,18 +92,6 @@ export default {
   font-size: 25px;
   font-weight: bold;
 }
-
-.nav_item {
-  border: 0.2px solid;
-  border-bottom-color: #B7B7B7;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: 900;
-  color: #4A4A4A;
-}
 .collapse_item {
   font-size: 20px;
 }
