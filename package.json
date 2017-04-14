@@ -17,10 +17,10 @@
     "bulma": "^0.4.0",
     "cors": "^2.8.3",
     "mysql": "^2.13.0",
+    "progress-tracker": "^1.0.0",
     "vue": "^2.2.2",
     "vue-axios": "^2.0.1",
     "vue-bulma-collapse": "^1.0.3",
-    "vue-bulma-progress-tracker": "0.0.4",
     "vue-router": "^2.3.0"
   },
   "devDependencies": {

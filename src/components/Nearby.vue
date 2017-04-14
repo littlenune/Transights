@@ -1,23 +1,54 @@
 <template>
     <div class="nearby">
-        <ProgressTracker>
-            <step-item v-for="(item, index) in [1, 2, 3, 'A', 'B']" :key="key" :marker="item + ''"></step-item>
-        </ProgressTracker>
+    <ul class="progress-tracker progress-tracker--center progress-tracker--word progress-tracker--word-center">
+          <li class="progress-step">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              <h4 class="progress-title">Step 1</h4>
+            </span>
+          </li>
+
+          <li class="progress-step">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              <h4 class="progress-title">Step 2</h4>
+            </span>
+          </li>
+
+          <li class="progress-step is-active">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              <h4 class="progress-title">Step 3</h4>
+            </span>
+          </li>
+
+          <li class="progress-step">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              <h4 class="progress-title">Step 4</h4>
+            </span>
+          </li>
+
+          <li class="progress-step">
+            <span class="progress-marker"></span>
+            <span class="progress-text">
+              <h4 class="progress-title">Step 5</h4>
+            </span>
+          </li>
+        </ul>
     </div>
     
 </template>
 
 <script>
-import ProgressTracker, { StepItem } from 'vue-bulma-progress-tracker'
+import 'progress-tracker/app/styles/_progress-tracker.scss'
+
 export default {
-  components: {
-    ProgressTracker,
-    StepItem
-  }
+    
 }
     
 </script>
 
-<style >
+<style>
     
 </style>
