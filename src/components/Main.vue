@@ -1,5 +1,6 @@
 <template>
     <div class="main">
+        <cover></cover>
         <p>Welcome to sightseeing near BTS</p>
         <ul>
             <li v-for="data in datas" v-if="data.btsStation && data.placeID">
@@ -14,9 +15,13 @@
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import cover from './Cover'
 
 Vue.use(VueAxios, axios)
     export default {
+        components: {
+            'cover': cover
+        },
         data() {
             return {
                 datas: [],
