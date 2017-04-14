@@ -38,8 +38,9 @@ Vue.use(VueAxios, axios)
     }
 </script>
 
-<style>
+<style scoped >
 .main {
+    padding-top: 80px;
     margin-left: 300px;
 }
 </style>
