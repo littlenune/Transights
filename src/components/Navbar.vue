@@ -78,7 +78,7 @@ export default {
   width: 300px;
   height: 100vh;
   display: block;
-  z-index: 10;
+  z-index: 25;
 }
 
 .nav_logo {

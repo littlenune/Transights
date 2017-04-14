@@ -18,7 +18,7 @@
     height: 80px;
     width: calc(100% - 390px );
     position: fixed;
-    z-index: 8;
+    z-index: 25;
     display: flex;
     border-top: 0;
     border-bottom: 0;
