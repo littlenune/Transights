@@ -11,7 +11,14 @@
                     <div class="media">
                         <div class="media-content">
                             <p class="title is-4">{{item.name }}</p>
-                            <p class="subtitle is-6">@{{ item.station }}</p>
+                            <div class="columns">
+                                <div class="column is-6 station">
+                                    <p class="subtitle is-6">@{{ item.station }}</p>
+                                </div>
+                                <div class="column is-6">
+                                    <star-rating :star-size="30" :read-only="true" :show-rating="false" :rating="5"></star-rating>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -21,8 +28,11 @@
 </template>
 
 <script>
-
+import StarRating from 'vue-star-rating'
 export default {
+    components: {
+        StarRating
+    },
     data() {
         return {
             places: [
@@ -39,10 +49,16 @@ export default {
     
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
     margin: 45px;
     width: 360px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(#000000, 0.3);
 }
 .component {
     list-style: none;
@@ -57,6 +73,16 @@ export default {
 .tile.is-parent {
     height: 400px;
     padding-left: 70px;
+}
+
+.column.is-6.station {
+    padding-top: 20px;
+}
+.title.is-4 {
+    margin-bottom: 0px;
+}
+.subtitle.is-6 {
+    margin-bottom: 0px;
 }
 .placeList {
     display: flex;
