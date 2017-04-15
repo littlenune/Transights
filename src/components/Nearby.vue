@@ -50,5 +50,11 @@ export default {
 </script>
 
 <style>
+.nearby {
+    background-color: #FBFBFB;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-bottom: -30px;
+}
     
 </style>

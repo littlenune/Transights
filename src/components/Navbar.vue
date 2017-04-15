@@ -79,6 +79,7 @@ export default {
   height: 100vh;
   display: block;
   z-index: 25;
+  background-color: #ffffff;
 }
 
 .nav_logo {
