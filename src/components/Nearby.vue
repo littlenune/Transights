@@ -4,35 +4,35 @@
           <li class="progress-step">
             <span class="progress-marker"></span>
             <span class="progress-text">
-              <h4 class="progress-title">Step 1</h4>
+              <h4 class="progress-title">Mochit</h4>
             </span>
           </li>
 
           <li class="progress-step">
             <span class="progress-marker"></span>
             <span class="progress-text">
-              <h4 class="progress-title">Step 2</h4>
+              <h4 class="progress-title">SaphanKhwai</h4>
             </span>
           </li>
 
           <li class="progress-step is-active">
             <span class="progress-marker"></span>
             <span class="progress-text">
-              <h4 class="progress-title">Step 3</h4>
+              <h4 class="progress-title">Ari</h4>
             </span>
           </li>
 
           <li class="progress-step">
             <span class="progress-marker"></span>
             <span class="progress-text">
-              <h4 class="progress-title">Step 4</h4>
+              <h4 class="progress-title">Sanampao</h4>
             </span>
           </li>
 
           <li class="progress-step">
             <span class="progress-marker"></span>
             <span class="progress-text">
-              <h4 class="progress-title">Step 5</h4>
+              <h4 class="progress-title">VictoryMonument</h4>
             </span>
           </li>
         </ul>
