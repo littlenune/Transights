@@ -2,6 +2,7 @@
     <div class="main">
         <cover></cover>
         <nearby></nearby>
+        <place></place>
         <p>Welcome to sightseeing near BTS</p>
         <ul>
             <li v-for="data in datas" v-if="data.btsStation && data.placeID">
@@ -18,12 +19,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import cover from './Cover'
 import nearby from './NearBy'
+import place from './Place'
 
 Vue.use(VueAxios, axios)
     export default {
         components: {
             'cover': cover,
-            'nearby': nearby
+            'nearby': nearby,
+            'place': place
         },
         data() {
             return {
