@@ -60,6 +60,7 @@ export default {
     transform: scale(1.05);
     box-shadow: 0 0 8px rgba(#000000, 0.3);
 }
+
 .component {
     list-style: none;
     display: flex;
@@ -74,7 +75,6 @@ export default {
     height: 400px;
     padding-left: 70px;
 }
-
 .column.is-6.station {
     padding-top: 20px;
 }
