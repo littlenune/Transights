@@ -1,8 +1,10 @@
 <template>
-    <header class="header">
-        <div class="search">
+    <div class="header">
+    <header class="search">
+        <div >
             <input type="text" placeholder="Search by type..." class="search_input">
         </div>
+    </header>
         
         <div>
             <a class="loginForm"  @click="open"> Login</a>
@@ -26,7 +28,7 @@
                 </sweet-modal-tab>
             </sweet-modal>
         </div>
-    </header>
+    </div>
 </template>
 
 <script>
@@ -50,9 +52,9 @@ export default
 
 <style scoped>
 .header {
+    width: 100%;
     margin-left: 300px;
     height: 80px;
-    width: calc(100% - 390px );
     position: fixed;
     z-index: 25;
     display: flex;
@@ -61,9 +63,9 @@ export default
 }
 
 .search {
+    width: calc(100% - 390px );
     position: relative;
     height: 80px;
-    width: 100%;
 }
 
 .search_input {
@@ -77,7 +79,7 @@ export default
 }
 
 .loginForm{
-  width: 100px;
+  width: 90px;
   height: 80px;
   display: flex;
   align-items: center;
