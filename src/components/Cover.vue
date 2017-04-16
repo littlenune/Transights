@@ -11,7 +11,7 @@
     
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cover_pic {
     display: flex;
     height: 400px;
@@ -22,16 +22,16 @@
     background-position: 50% 50%;
     position: relative;
     background-image: url('../assets/cover.jpg');
-}
 
-.cover_pic:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: hsla(0, 0%, 97%, .7)
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: hsla(0, 0%, 97%, .7)
+    }
 }
 
 .content_pic {
@@ -39,12 +39,12 @@
     position: relative;
 }
 
-p.title {
-    font-weight: 600;
+p {
+    &.title {
+        font-weight: 600;
+    }
+    &.subtitle {
+        font-weight: 400;
+    }
 }
-
-p.subtitle {
-    font-weight: 400;
-}
-    
 </style>

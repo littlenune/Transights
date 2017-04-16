@@ -16,7 +16,7 @@
                                     <p class="subtitle is-6">@{{ item.station }}</p>
                                 </div>
                                 <div class="column is-6">
-                                    <star-rating :star-size="30" :read-only="true" :show-rating="false" :rating="5"></star-rating>
+                                    <star-rating :star-size="30" :read-only="true" :show-rating="false" :increment="0.1" :rating="5"></star-rating>
                                 </div>
                             </div>
                         </div>
@@ -54,11 +54,10 @@ export default {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     margin: 45px;
     width: 360px;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 8px rgba(#000000, 0.3);
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 8px rgba(#000000, 0.3);
+    }
 }
 
 .component {
@@ -84,14 +83,15 @@ export default {
 .subtitle.is-6 {
     margin-bottom: 0px;
 }
-.placeList {
-    display: flex;
-    background-color: #F7F7F7;
-}
 .place {
     width: 400px;
     height: 250px;
     background-color: #000000;
     margin: 0px 40px 30px 40px;
+    
+    &List{
+        display: flex;
+        background-color: #F7F7F7;
+    }
 }
 </style>

@@ -70,7 +70,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .navv {
   position: fixed;
   top: 0;
@@ -95,5 +95,24 @@ export default {
 }
 .collapse_item {
   font-size: 20px;
+}
+
+.control {
+  font-size: 0.96rem;
+}
+
+.select {
+
+  select {
+    width: 250px;
+
+    &:focus {
+      border-color: #777777;
+    }
+  }
+}
+
+.button {
+  width: 250px;
 }
 </style>

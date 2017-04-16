@@ -50,7 +50,7 @@ export default
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header {
     width: 100%;
     margin-left: 300px;
@@ -66,16 +66,16 @@ export default
     width: calc(100% - 390px );
     position: relative;
     height: 80px;
-}
 
-.search_input {
-    padding: 15px 30px 15px 90px;
-    outline: none;
-    border: 0;
-    height: 80px;
-    width: 100%;
-    display: block;
-    font-size: 18px;
+    &_input {
+        padding: 15px 30px 15px 90px;
+        outline: none;
+        border: 0;
+        height: 80px;
+        width: 100%;
+        display: block;
+        font-size: 18px;
+    }
 }
 
 .loginForm{
