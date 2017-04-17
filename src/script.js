@@ -32,7 +32,13 @@ app.get('/address', function (req, res) {
 });
 
 app.get('/bts', function (req, res) {
-    connection.query("SELECT * FROM bts", function(err, result){
+    connection.query("SELECT * FROM btsstation", function(err, result){
+        res.send(result);
+    });
+});
+
+app.get('/place', function (req, res) {
+    connection.query("SELECT * FROM btsStation NATURAL JOIN place", function(err, result){
         res.send(result);
     });
 });
