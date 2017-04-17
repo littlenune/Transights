@@ -2,7 +2,7 @@
     <div class="main">
         <cover></cover>
         <nearby></nearby>
-        <place></place>
+        <place :placeData="placeData"></place>
     </div>
 </template>
 <script>
@@ -11,6 +11,7 @@ import nearby from './NearBy'
 import place from './Place'
 
     export default {
+        props: ['placeData'],
         components: {
             'cover': cover,
             'nearby': nearby,
