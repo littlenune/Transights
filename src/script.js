@@ -4,7 +4,7 @@ var mysql  = require('mysql');
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'sightseeing'
+        database: 'transights'
     });
 
     connection.connect(function(err){
@@ -26,8 +26,14 @@ app.use(cors());
 var port = process.env.PORT || 7777;
 
 app.get('/address', function (req, res) {
-    connection.query("SELECT * FROM Address", function(err, result){
+    connection.query("SELECT * FROM address", function(err, result){
          res.send(result);
+    });
+});
+
+app.get('/bts', function (req, res) {
+    connection.query("SELECT * FROM bts", function(err, result){
+        res.send(result);
     });
 });
 

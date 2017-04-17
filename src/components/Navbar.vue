@@ -10,12 +10,22 @@
     <div>
     <Collapse is-fullwidth class="collapse_list" >
       <CollapseItem class="collapse_item" title="What are you looking for?">
-        <div class="field" v-for="item in lookingItems">
+        <div class="field">
           <p class="control">
-            <span class="select is-dark">
+            <span class="select">
               <select>
-                <option>{{ item.title }}</option>
-                <option v-for="item2 in item.choices">{{ item2.choice }}</option>
+                <option>Select type of transpotation</option>
+                <option>BTS</option>
+              </select>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <span class="select">
+              <select>
+                <option>Select station</option>
+                <option v-for="station in bts">{{ station.BTS_Station }}</option>
               </select>
             </span>
           </p>
@@ -28,7 +38,7 @@
             <span class="select is-dark">
               <select>
                 <option>{{ item.title }}</option>
-                <option v-for="item2 in item.choices">{{ item2.choice }}</option>
+                <option v-for="station in bts">{{ station.BTS_Station }}</option>
               </select>
             </span>
           </p>
@@ -46,23 +56,16 @@
 import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
 
 export default {
+  props: ['bts'],
   components: {
     Collapse,
     CollapseItem
   },
   data() {
     return {
-      navItems: [
-        { title : 'What are you looking for?' },
-        { title : 'Estimate time and pricing' }
-      ],
-      lookingItems: [
-        { title: 'Select type of transpotation', choices: [ { choice: 'BTS'}, {choice: 'MRT'}] },
-        { title: 'Select station', choices: [ {choice: '3'}, {choice: '4'}]}
-      ],
       estimate: [
-        { title: 'FROM', choices: [ { choice: 'BTS'}, {choice: 'MRT'}] },
-        { title: 'TO', choices: [ { choice: 'BTS'}, {choice: 'MRT'}] }
+        { title: 'FROM' },
+        { title: 'TO' }
       ]
     }
   }
