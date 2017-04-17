@@ -25,7 +25,7 @@
             <span class="select">
               <select>
                 <option>Select station</option>
-                <option v-for="station in bts">{{ station.BTS_Station }}</option>
+                <option v-for="station in bts">{{ station.stationName }}</option>
               </select>
             </span>
           </p>
@@ -38,7 +38,7 @@
             <span class="select is-dark">
               <select>
                 <option>{{ item.title }}</option>
-                <option v-for="station in bts">{{ station.BTS_Station }}</option>
+                <option v-for="station in bts">{{ station.stationName }}</option>
               </select>
             </span>
           </p>

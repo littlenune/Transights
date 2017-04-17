@@ -1,6 +1,6 @@
 <template>
     <div class="component inline-flex">
-        <div v-for="item in places">
+        <div v-for="(item, index) in placeData" v-if="index < 20">
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
@@ -10,10 +10,10 @@
                 <div class="card-content">
                     <div class="media">
                         <div class="media-content">
-                            <p class="title is-4">{{item.name }}</p>
+                            <p class="title is-4">{{item.PlaceName }}</p>
                             <div class="columns">
                                 <div class="column is-6 station">
-                                    <p class="subtitle is-6">@{{ item.station }}</p>
+                                    <p class="subtitle is-6">@{{ item.stationName }} Station</p>
                                 </div>
                                 <div class="column is-6">
                                     <star-rating :star-size="30" :read-only="true" :show-rating="false" :increment="0.1" :rating="5"></star-rating>
@@ -30,6 +30,7 @@
 <script>
 import StarRating from 'vue-star-rating'
 export default {
+    props:['placeData'],
     components: {
         StarRating
     },
