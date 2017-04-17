@@ -2,7 +2,7 @@
   <div id="app">
     <navbar :bts= "btsStation"></navbar>
     <headerBar></headerBar>
-    <router-view></router-view>
+    <mainPage :placeData="placeData"></mainPage>
   </div>
 </template>
 
@@ -10,15 +10,18 @@
 import axios from 'axios'
 import headerBar from './components/Header'
 import navbar from './components/Navbar'
+import mainPage from './components/Main'
 export default {
   components: {
     'navbar': navbar,
-    'headerBar': headerBar
+    'headerBar': headerBar,
+    'mainPage': mainPage
   },
 
   data() {
     return {
-      btsStation: []
+      btsStation: [],
+      placeData: []
     }
   },
   methods: {
@@ -28,12 +31,21 @@ export default {
         this.btsStation = response.data
         console.log(response.data)
       }).catch(error => {
-        console.log('error')
+        console.log('error load station')
+      })
+    },
+    loadPlace() {
+      const api = 'http://localhost:7777/place'
+      axios.get(api).then(response => {
+        this.placeData = response.data
+      }).catch(error => {
+        console.log('error load place')
       })
     }
   },
   created() {
     this.loadStation();
+    this.loadPlace();
   }
 }
 </script>
