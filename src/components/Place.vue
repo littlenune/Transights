@@ -1,10 +1,10 @@
 <template>
     <div class="component inline-flex">
-        <div v-for="(item, index) in placeData" v-if="index < 20">
+        <div v-for="(item, index) in placeData" v-if="index < 100">
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
-                        <img src="http://bulma.io/images/placeholders/1280x960.png" alt="Image">
+                        <img :src="item.imgsrc">
                     </figure>
                 </div>
                 <div class="card-content">
@@ -33,18 +33,6 @@ export default {
     props:['placeData'],
     components: {
         StarRating
-    },
-    data() {
-        return {
-            places: [
-                { name: 'Place1', station: 'station 1'},
-                { name: 'Place2', station: 'station 2'},
-                { name: 'Place3', station: 'station 3'},
-                { name: 'Place4', station: 'station 4'},
-                { name: 'Place5', station: 'station 5'},
-                { name: 'Place6', station: 'station 6'},
-            ]
-        }
     }
 }
     
