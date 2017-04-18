@@ -13,8 +13,8 @@
         <div class="field">
           <p class="control">
             <span class="select">
-              <select>
-                <option>Select type of transpotation</option>
+              <select v-model="selectType">
+                <option disabled value="">Select type of transportation</option>
                 <option>BTS</option>
               </select>
             </span>
@@ -23,9 +23,9 @@
         <div class="field">
           <p class="control">
             <span class="select">
-              <select>
-                <option>Select station</option>
-                <option v-for="station in bts">{{ station.stationName }}</option>
+              <select v-model="selectStation">
+                <option disabled value="">Select station</option>
+                <option v-if="selectType == 'BTS'" v-for="station in bts">{{ station.stationName }}</option>
               </select>
             </span>
           </p>
@@ -33,11 +33,21 @@
         <a class="button is-dark">GO</a>        
       </CollapseItem>
       <CollapseItem class="collapse_item" title="Estimate time and pricing">
-        <div class="field" v-for="item in estimate">
+        <div class="field">
           <p class="control">
-            <span class="select is-dark">
-              <select>
-                <option>{{ item.title }}</option>
+            <span class="select">
+              <select v-model="fromStation">
+                <option disabled value="">FROM</option>
+                <option v-for="station in bts">{{ station.stationName }}</option>
+              </select>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <p class="control">
+            <span class="select">
+              <select v-model="toStation">
+                <option disabled value="">TO</option>
                 <option v-for="station in bts">{{ station.stationName }}</option>
               </select>
             </span>
@@ -63,6 +73,10 @@ export default {
   },
   data() {
     return {
+      selectType: '',
+      selectStation: '',
+      fromStation: '',
+      toStation: '',
       estimate: [
         { title: 'FROM' },
         { title: 'TO' }
