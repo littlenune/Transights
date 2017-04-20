@@ -36,8 +36,16 @@ app.post('/searchplace', function(req, res) {
     })  
 })
 
+
+
 app.get('/searchplace', (req, res) => {
     res.json(go);
+})
+
+app.get('/login', function(req,res) {
+    connection.query("SELECT * FROM user",function(err,result){
+        res.send(result);
+    });
 })
 
 app.get('/address', function (req, res) {
