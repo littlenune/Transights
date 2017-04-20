@@ -1,6 +1,7 @@
 <template>
-    <div class="component inline-flex">
-        <div v-for="(item, index) in placeData" v-if="index < 100">
+    <div class="place">
+        <div class="component">
+        <div v-for="(item, index) in placeData" v-if="loadPlace(index)">
             <div class="card">
                 <div class="card-image">
                     <figure class="image is-4by3">
@@ -24,21 +25,61 @@
                 </div>
             </div>
         </div>
+        </div>
+        <div class="button_container">
+            <a class="button" :class="{'is-loading' : isLoading()}" v-on:click="loadmore()" v-if="checkLoad()">Load More</a>
+            <span v-else>End of result</span>
+        </div>
     </div>  
 </template>
 
 <script>
 import StarRating from 'vue-star-rating'
 export default {
-    props:['placeData'],
+    props:['placeData', 'goStation'],
     components: {
         StarRating
+    },
+    data() {
+        return {
+            index: 0,
+            numberOfList: 10,
+            loadingState: false
+        }
+    },
+    methods: {
+        loadmore() {
+            this.loadingState = true
+            this.sleep(500).then(() => {
+                this.numberOfList += 10
+                this.loadingState = false 
+            })         
+        },
+        loadPlace(index) {
+            this.index = index
+            if(index < this.numberOfList) return true 
+            return false;
+        },
+        isLoading(){
+            return this.loadingState
+        },
+        checkLoad(){
+            if(this.numberOfList >= this.placeData.length ) return false;
+            return true;
+        },
+        sleep(ms){
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
     }
 }
     
 </script>
 
 <style lang="scss" scoped>
+
+.place {
+    background-color: #F7F7F7;
+}
 .card {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     margin: 45px;
@@ -54,7 +95,6 @@ export default {
     display: flex;
     flex-wrap: wrap;   
     padding-top:20px;
-    background-color: #F7F7F7;
     padding-left: 35px;
     padding-right: 40px;
 }
@@ -72,15 +112,11 @@ export default {
 .subtitle.is-6 {
     margin-bottom: 0px;
 }
-.place {
-    width: 400px;
-    height: 250px;
-    background-color: #000000;
-    margin: 0px 40px 30px 40px;
-    
-    &List{
-        display: flex;
-        background-color: #F7F7F7;
-    }
+
+.button, span{
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 0;
 }
+
 </style>
