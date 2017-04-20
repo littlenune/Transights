@@ -1,6 +1,6 @@
-var mysql  = require('mysql');
+const mysql  = require('mysql');
 
-    var connection = mysql.createConnection({
+    const connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
@@ -14,16 +14,31 @@ var mysql  = require('mysql');
             console.log('Connnected');
     });
 
-connection.query("SELECT * FROM Address", function(err, result){
-    console.log(result);
-});
-
-var app = require('express')();
+const app = require('express')();
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
 
-var port = process.env.PORT || 7777;
+const port = process.env.PORT || 7777;
+
+let go = 'ready';
+
+app.post('/searchplace', function(req, res) {
+    station = req.body.stationName;
+    connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE stationName = "' + station + '"', function(err, result) {
+        res.send(result);
+        go = result;
+    })  
+})
+
+app.get('/searchplace', (req, res) => {
+    res.json(go);
+})
 
 app.get('/address', function (req, res) {
     connection.query("SELECT * FROM address", function(err, result){
@@ -40,8 +55,9 @@ app.get('/bts', function (req, res) {
 app.get('/place', function (req, res) {
     connection.query("SELECT * FROM btsStation NATURAL JOIN place", function(err, result){
         res.send(result);
-    });
+    });  
 });
+
 
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);
