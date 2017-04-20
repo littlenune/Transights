@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <navbar :bts= "btsStation"></navbar>
+    <navbar :bts= "btsStation" @selectToGo="goStation = $event"></navbar>
     <headerBar></headerBar>
-    <mainPage :placeData="placeData"></mainPage>
+    <mainPage :placeData="placeData" :goStation="goStation"></mainPage>
   </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
   data() {
     return {
       btsStation: [],
-      placeData: []
+      placeData: [], // not use
+      goStation: ''
     }
   },
   methods: {
@@ -35,7 +36,12 @@ export default {
       })
     },
     loadPlace() {
-      const api = 'http://localhost:7777/place'
+      let api = 'http://localhost:7777/place'      
+      if(this.goStation != ''){
+        api = 'http://localhost:7777/searchplace'
+        console.log('load place when go')
+      }
+      
       axios.get(api).then(response => {
         this.placeData = response.data
       }).catch(error => {

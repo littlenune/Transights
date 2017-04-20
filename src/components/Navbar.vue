@@ -30,7 +30,7 @@
             </span>
           </p>
         </div>
-        <a class="button is-dark">GO</a>        
+        <a class="button is-dark" v-on:click="go()">GO</a>        
       </CollapseItem>
       <CollapseItem class="collapse_item" title="Estimate time and pricing">
         <div class="field">
@@ -64,6 +64,7 @@
 
 <script>
 import { Collapse, Item as CollapseItem } from 'vue-bulma-collapse'
+import axios from 'axios'
 
 export default {
   props: ['bts'],
@@ -76,11 +77,15 @@ export default {
       selectType: '',
       selectStation: '',
       fromStation: '',
-      toStation: '',
-      estimate: [
-        { title: 'FROM' },
-        { title: 'TO' }
-      ]
+      toStation: ''
+    }
+  },
+  methods: {
+    go() {
+      this.$emit('selectToGo', this.selectStation)
+      axios.post('http://localhost:7777/searchplace', {
+        stationName: this.selectStation
+      })
     }
   }
 }
