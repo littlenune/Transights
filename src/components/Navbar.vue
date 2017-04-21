@@ -53,7 +53,21 @@
             </span>
           </p>
         </div>
-        <a class="button is-dark">CALCULATE</a>    
+        <a class="button is-dark" v-on:click="calculateTP()">CALCULATE</a>    
+        <nav class="level" v-if="calculate">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Time (Min)</p>
+              <p class="title">3,456</p>
+            </div>
+          </div>
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Price (Baht)</p>
+              <p class="title">123</p>
+            </div>
+          </div>
+        </nav>
       </CollapseItem>
     </Collapse>
   </div>
@@ -77,7 +91,8 @@ export default {
       selectType: '',
       selectStation: '',
       fromStation: '',
-      toStation: ''
+      toStation: '',
+      calculate: false
     }
   },
   methods: {
@@ -98,6 +113,9 @@ export default {
     },
     sleep(ms){
       return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    calculateTP(){
+      this.calculate = true;
     }
   }
 }
@@ -148,5 +166,10 @@ export default {
 
 .button {
   width: 250px;
+}
+
+.level {
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 </style>
