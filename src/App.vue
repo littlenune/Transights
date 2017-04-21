@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar :bts= "btsStation" @selectToGo="goStation = $event"></navbar>
+    <navbar :bts= "btsStation" @selectToGo="goStation = $event" @searchData="placeData = $event"></navbar>
     <headerBar></headerBar>
     <mainPage :placeData="placeData" :goStation="goStation"></mainPage>
   </div>

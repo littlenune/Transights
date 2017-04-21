@@ -86,6 +86,18 @@ export default {
       axios.post('http://localhost:7777/searchplace', {
         stationName: this.selectStation
       })
+      this.sleep(500).then(() => {
+        this.nextGo()
+      })
+    },
+    nextGo(){
+      axios.get('http://localhost:7777/searchplace').then(response => {
+        this.$emit('searchData', response.data )
+        console.log('sent from navbar')
+      })
+    },
+    sleep(ms){
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
   }
 }
