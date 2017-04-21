@@ -27,8 +27,8 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 7777;
 
 let go = 'ready';
-
 let sendUser = 'ready';
+let tp = 'ready';
 
 app.post('/searchplace', function(req, res) {
     station = req.body.stationName;
@@ -44,6 +44,19 @@ app.post('/user',function(req,res) {
         res.send(result);
         sendUser = result;
     })
+})
+
+app.post('/timeandprice', function(req,res) {
+    dept = req.body.dept;
+    arri = req.body.arri;
+    connection.query('SELECT price.'+ arri + ' as price , timetable.'+ arri +' as time FROM price , timetable WHERE price.station = "' + dept +'" and timetable.station = "'+ dept + '"' , function(err, result) {
+        res.send(result);
+        tp = result;
+    })
+})
+
+app.get('/timeandprice', function(req,res) {
+    res.json(tp);
 })
 
 app.get('/user', (req,res) => {

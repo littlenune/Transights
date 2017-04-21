@@ -58,13 +58,13 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Time (Min)</p>
-              <p class="title">3,456</p>
+              <p class="title">{{ dataCal[0].time }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Price (Baht)</p>
-              <p class="title">123</p>
+              <p class="title">{{ dataCal[0].price }}</p>
             </div>
           </div>
         </nav>
@@ -92,7 +92,8 @@ export default {
       selectStation: '',
       fromStation: '',
       toStation: '',
-      calculate: false
+      calculate: false,
+      dataCal : []
     }
   },
   methods: {
@@ -115,7 +116,21 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
     calculateTP(){
+      axios.post('http://localhost:7777/timeandprice', {
+        dept : this.fromStation,
+        arri : this.toStation
+      })
+
+      this.sleep(500).then(() => {
+        this.showTP()
+      })
       this.calculate = true;
+    },
+    showTP(){
+      axios.get('http://localhost:7777/timeandprice').then(response => {
+        this.dataCal = response.data
+        console.log(this.dataCal)
+      })
     }
   }
 }
