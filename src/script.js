@@ -40,7 +40,7 @@ app.post('/searchplace', function(req, res) {
 
 app.post('/user',function(req,res) {
     username = req.body.username;
-    connection.query('SELECT * FROM user WHERE userID = "'+ username + '"', function(err,result) {
+    connection.query('SELECT * FROM user WHERE userName = "'+ username + '"', function(err,result) {
         res.send(result);
         sendUser = result;
     })
