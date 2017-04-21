@@ -1,6 +1,6 @@
 <template>
 <div>
-<div id="fake-nav"><a class = "loginForm" href="#login" @click="open('login', $event)">Login</a></div>
+<div id="fake-nav"><a class = "loginForm" href="#login" @click="open('login', $event)">{{btn}}</a></div>
         <div class="user-modal-container" :class="{ 'active': active }" id="login-modal" @click="close">
             <div class="user-modal">
                 <ul class="form-switcher">
@@ -9,15 +9,15 @@
                     </ul>
                 <div class="form-register" :class="{ 'active': active == 'register' }" id="form-register">
                     <div class="error-message" v-text="registerError"></div>
-                    <input type="text" name="name" placeholder="Name" v-model="registerName" @keyup.enter="submit('register', $event)">
-                    <input type="email" name="email" placeholder="Email" v-model="registerEmail" @keyup.enter="submit('register', $event)">
+                    <input type="name" name="name" placeholder="Name" v-model="registerName" @keyup.enter="submit('register', $event)">
+                    <input type="lastname" name="lastname" placeholder="Lastname" v-model="registerLastname" @keyup.enter="submit('register', $event)">
                     <input type="password" name="password" placeholder="Password" v-model="registerPassword" @keyup.enter="submit('register', $event)">
                     <input type="submit" :class="{ 'disabled': submitted == 'register' }" @click="submit('register', $event)" v-model="registerSubmit" id="registerSubmit">
                     <div class="links"> <a href="" @click="flip('login', $event)">Already have an account?</a></div>
                 </div>
                 <div class="form-login" :class="{ 'active': active == 'login' }" id="form-login">
                     <div class="error-message" v-text="loginError"></div>
-                    <input type="text" name="user" placeholder="Email or Username" v-model="loginUser" @keyup.enter="submit('login', $event)">
+                    <input type="text" name="user" placeholder="Username" v-model="loginUser" @keyup.enter="submit('login', $event)">
                     <input type="password" name="password" placeholder="Password" v-model="loginPassword" @keyup.enter="submit('login', $event)">
                     <input type="submit" :class="{ 'disabled': submitted == 'login' }" v-on:click="sendUser()" v-model="loginBtn" id="loginSubmit">
                     <div class="links"> <a href="" @click="flip('password', $event)">Forgot your password?</a></div>
@@ -54,7 +54,7 @@ export default
 
     // Modal text fields
     registerName: '',
-    registerEmail: '',
+    registerLastname: '',
     registerPassword: '',
     loginUser: '',
     loginPassword: '',
@@ -66,7 +66,8 @@ export default
     passwordError: '',
 
     dataLogin: [],
-    loginBtn: "Login"
+    loginBtn: "Login",
+    btn: "Login"
   }
      },
     methods: {
@@ -82,9 +83,10 @@ export default
       this.sleep(500).then(() => {
           axios.get('http://localhost:7777/user').then(response => {
           this.dataLogin = response.data
-          if ( this.loginPassword == this.dataLogin[0].password ){
+          if ( this.dataLogin[0] != null && this.loginPassword == this.dataLogin[0].password ){
              this.loginBtn = "Done"
-             this.close()
+             this.active = false
+             this.btn = "Logout"
           } else {
               this.loginBtn = "Failed"
           }
@@ -94,9 +96,7 @@ export default
     },
     sleep(ms){
         return new Promise(resolve => setTimeout(resolve, ms));
-    },
-
-    
+    }, 
 
     close: function(e) {
       e.preventDefault();
@@ -120,7 +120,7 @@ export default
       switch (which) {
         case 'register':
           data.name = this.registerName;
-          data.email = this.registerEmail;
+          data.lastname = this.registerLastname;
           data.password = this.registerPassword;
           this.$set('registerSubmit', 'Registering...');
           break;
@@ -130,7 +130,7 @@ export default
           this.$set('loginSubmit', 'Logging In...');
           break;
         case 'password':
-          data.email = this.passwordEmail;
+          data.lastname = this.passwordLastname;
 
           this.$set('passwordSubmit', 'Resetting Password...')
           break;
