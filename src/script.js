@@ -28,6 +28,8 @@ const port = process.env.PORT || 7777;
 
 let go = 'ready';
 
+let sendUser = 'ready';
+
 app.post('/searchplace', function(req, res) {
     station = req.body.stationName;
     connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE stationName = "' + station + '"', function(err, result) {
@@ -36,7 +38,17 @@ app.post('/searchplace', function(req, res) {
     })  
 })
 
+app.post('/user',function(req,res) {
+    username = req.body.username;
+    connection.query('SELECT * FROM user WHERE userID = "'+ username + '"', function(err,result) {
+        res.send(result);
+        sendUser = result;
+    })
+})
 
+app.get('/user', (req,res) => {
+    res.json(sendUser);
+})
 
 app.get('/searchplace', (req, res) => {
     res.json(go);

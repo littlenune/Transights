@@ -19,7 +19,7 @@
                     <div class="error-message" v-text="loginError"></div>
                     <input type="text" name="user" placeholder="Email or Username" v-model="loginUser" @keyup.enter="submit('login', $event)">
                     <input type="password" name="password" placeholder="Password" v-model="loginPassword" @keyup.enter="submit('login', $event)">
-                    <input type="submit" :class="{ 'disabled': submitted == 'login' }" @click="submit('login', $event)" v-model="loginSubmit" id="loginSubmit">
+                    <input type="submit" :class="{ 'disabled': submitted == 'login' }" v-on:click="sendUser()" v-model="loginBtn" id="loginSubmit">
                     <div class="links"> <a href="" @click="flip('password', $event)">Forgot your password?</a></div>
                 </div>
                 <div class="form-password" :class="{ 'active': active == 'password' }" id="form-password">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
 </template>
 
@@ -64,14 +64,50 @@ export default
     registerError: '',
     loginError: '',
     passwordError: '',
+
+    dataLogin: [],
+    loginBtn: "Login"
   }
      },
     methods: {
      open: function(which, e) {
-      e.preventDefault();
-      this.active = which;
+        e.preventDefault();
+        this.active = which;
     },
-  close: function(e) {
+    // loadUser() {
+    //   const api = 'http://localhost:7777/user'
+    //   axios.get(api).then(response => {
+    //     this.btsStation = response.data
+    //     console.log(response.data)
+    //   }).catch(error => {
+    //     console.log('error load station')
+    //   })
+    // },
+    sendUser() {
+      axios.post('http://localhost:7777/user', {
+       username: this.loginUser
+      })
+      this.loginBtn = "Loggin in..."
+      this.sleep(500).then(() => {
+          axios.get('http://localhost:7777/user').then(response => {
+          this.dataLogin = response.data
+          if ( this.loginPassword == this.dataLogin[0].password ){
+             this.loginBtn = "Done"
+             this.close()
+          } else {
+              this.loginBtn = "Failed"
+          }
+        })
+      })
+      
+    },
+    sleep(ms){
+        return new Promise(resolve => setTimeout(resolve, ms));
+    },
+
+    
+
+    close: function(e) {
       e.preventDefault();
       if (e.target === this.$el) {
         this.active = null;
@@ -104,6 +140,7 @@ export default
           break;
         case 'password':
           data.email = this.passwordEmail;
+
           this.$set('passwordSubmit', 'Resetting Password...')
           break;
       }
