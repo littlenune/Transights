@@ -74,15 +74,6 @@ export default
         e.preventDefault();
         this.active = which;
     },
-    // loadUser() {
-    //   const api = 'http://localhost:7777/user'
-    //   axios.get(api).then(response => {
-    //     this.btsStation = response.data
-    //     console.log(response.data)
-    //   }).catch(error => {
-    //     console.log('error load station')
-    //   })
-    // },
     sendUser() {
       axios.post('http://localhost:7777/user', {
        username: this.loginUser
