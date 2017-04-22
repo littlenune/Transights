@@ -11,8 +11,9 @@
                     <div class="error-message" v-text="registerError"></div>
                     <input type="name" name="name" placeholder="Name" v-model="registerName" @keyup.enter="submit('register', $event)">
                     <input type="lastname" name="lastname" placeholder="Lastname" v-model="registerLastname" @keyup.enter="submit('register', $event)">
+                    <input type="username" name="username" placeholder="Username" v-model="registerUsername" @keyup.enter="submit('register', $event)">
                     <input type="password" name="password" placeholder="Password" v-model="registerPassword" @keyup.enter="submit('register', $event)">
-                    <input type="submit" :class="{ 'disabled': submitted == 'register' }" @click="submit('register', $event)" v-model="registerSubmit" id="registerSubmit">
+                    <input type="submit" :class="{ 'disabled': submitted == 'register' }" @click="regisUser()" v-model="regisBtn" id="registerSubmit">
                     <div class="links"> <a href="" @click="flip('login', $event)">Already have an account?</a></div>
                 </div>
                 <div class="form-login" :class="{ 'active': active == 'login' }" id="form-login">
@@ -54,6 +55,7 @@ export default {
             // Modal text fields
             registerName: '',
             registerLastname: '',
+            registerUsername: '',
             registerPassword: '',
             loginUser: '',
             loginPassword: '',
@@ -66,6 +68,7 @@ export default {
 
             dataLogin: [],
             loginBtn: "Login",
+            regisBtn: "Register",
             btn: "Login"
         }
     },
@@ -92,18 +95,24 @@ export default {
                 })
             })
         },
+        regisUser() {
+            axios.post('http://localhost:7777/regisUser', {
+                name: this.registerName,
+                lastname: this.registerLastname,
+                username: this.registerUsername,
+                password: this.registerPassword
+            })
+            this.regisBtn = "Registering..."
+            this.sleep(500).then(() => {
+                this.regisBtn = "Done"
+            })
+        },
         sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
         close() {
             this.active = false
         },
-        // close: function(e) {
-        //   e.preventDefault();
-        //   if (e.target === this.$el) {
-        //     this.active = null;
-        //   }
-        // },
         flip: function(which, e) {
             e.preventDefault();
             if (which !== this.active) {

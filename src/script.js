@@ -46,14 +46,23 @@ app.post('/user',function(req,res) {
     })
 })
 
+app.post('/regisUser',function(req,res) {
+    var user = {userID:req.body.name, userName:req.body.username, password:req.body.password, name:req.body.name, lastname:req.body.lastname};
+        connection.query('INSERT INTO user SET ?',user,function(err,res) {
+          if (err) throw err;      
+        });
+})
+
 app.post('/timeandprice', function(req,res) {
     dept = req.body.dept;
     arri = req.body.arri;
     connection.query('SELECT price.'+ arri + ' as price , timetable.'+ arri +' as time FROM price , timetable WHERE price.station = "' + dept +'" and timetable.station = "'+ dept + '"' , function(err, result) {
+       
         res.send(result);
         tp = result;
     })
 })
+
 
 app.get('/timeandprice', function(req,res) {
     res.json(tp);
