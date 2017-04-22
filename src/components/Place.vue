@@ -2,7 +2,7 @@
     <div class="place">
         <div class="component">
         <div v-for="(item, index) in placeData" v-if="loadPlace(index)">
-            <div class="card">
+            <div class="card" @click="activeModal()" >
                 <div class="card-image">
                     <figure class="image is-4by3">
                         <img :src="item.imgsrc">
@@ -27,24 +27,28 @@
         </div>
         </div>
         <div class="button_container">
-            <a class="button" :class="{'is-loading' : isLoading()}" v-on:click="loadmore()" v-if="checkLoad()">Load More</a>
+            <a class="button" :class="{'is-loading' : isLoading()}" @click="loadmore()" v-if="checkLoad()">Load More</a>
             <span v-else>End of result</span>
         </div>
+        <placeModal :activePlace="activePlace" @closeModal="activePlace = $event"></placeModal>
     </div>  
 </template>
 
 <script>
 import StarRating from 'vue-star-rating'
+import placeModal from './PlaceModal.vue'
 export default {
-    props:['placeData', 'goStation'],
+    props: ['placeData', 'goStation'],
     components: {
-        StarRating
+        StarRating,
+        placeModal
     },
     data() {
         return {
             index: 0,
             numberOfList: 10,
-            loadingState: false
+            loadingState: false,
+            activePlace: false
         }
     },
     methods: {
@@ -60,15 +64,18 @@ export default {
             if(index < this.numberOfList) return true 
             return false;
         },
-        isLoading(){
+        isLoading() {
             return this.loadingState
         },
-        checkLoad(){
+        checkLoad() {
             if(this.numberOfList >= this.placeData.length ) return false;
             return true;
         },
-        sleep(ms){
+        sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
+        },
+        activeModal() {
+            this.activePlace = true
         }
     }
 }
