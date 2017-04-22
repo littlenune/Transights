@@ -2,7 +2,7 @@
 <div>
 <div id="fake-nav"><a class = "loginForm" href="#login" @click="open('login', $event)">{{ btn }}</a></div>
         <div class="user-modal-container" :class="{ 'active': active }" id="login-modal" @click="close()">
-            <div class="user-modal">
+            <div class="user-modal" @click.stop>
                 <ul class="form-switcher">
                     <li @click="flip('register', $event)"><a href="" id="register-form">Register</a></li>
                     <li @click="flip('login', $event)"><a href="" id="login-form">Login</a></li>
