@@ -30,7 +30,7 @@ let go = 'ready';
 let sendUser = 'ready';
 let tp = 'ready';
 
-app.post('/searchplace', function(req, res) {
+app.post('/selectStation', function(req, res) {
     station = req.body.stationName;
     connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE stationName = "' + station + '"', function(err, result) {
         res.send(result);
@@ -72,7 +72,7 @@ app.get('/user', (req,res) => {
     res.json(sendUser);
 })
 
-app.get('/searchplace', (req, res) => {
+app.get('/selectStation', (req, res) => {
     res.json(go);
 })
 

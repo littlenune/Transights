@@ -99,7 +99,7 @@ export default {
   methods: {
     go() {
       this.$emit('selectToGo', this.selectStation)
-      axios.post('http://localhost:7777/searchplace', {
+      axios.post('http://localhost:7777/selectStation', {
         stationName: this.selectStation
       })
       this.sleep(500).then(() => {
@@ -107,7 +107,7 @@ export default {
       })
     },
     nextGo(){
-      axios.get('http://localhost:7777/searchplace').then(response => {
+      axios.get('http://localhost:7777/selectStation').then(response => {
         this.$emit('searchData', response.data )
         console.log('sent from navbar')
       })
