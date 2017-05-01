@@ -2,7 +2,7 @@
     <div class="place">
         <div class="component">
         <div v-for="(item, index) in placeData" v-if="loadPlace(index)">
-            <div class="card" @click="activeModal()" >
+            <div class="card" @click="activeModal(item)" >
                 <div class="card-image">
                     <figure class="image is-4by3">
                         <img :src="item.imgsrc">
@@ -30,7 +30,7 @@
             <a class="button" :class="{'is-loading' : isLoading()}" @click="loadmore()" v-if="checkLoad()">Load More</a>
             <span v-else>End of result</span>
         </div>
-        <placeModal :activePlace="activePlace" @closeModal="activePlace = $event"></placeModal>
+        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" @closeModal="activePlace = $event"></placeModal>
     </div>  
 </template>
 
@@ -48,7 +48,8 @@ export default {
             index: 0,
             numberOfList: 10,
             loadingState: false,
-            activePlace: false
+            activePlace: false,
+            dataPlace: []
         }
     },
     methods: {
@@ -74,8 +75,9 @@ export default {
         sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
-        activeModal() {
+        activeModal(item) {
             this.activePlace = true
+            this.dataPlace = item
         }
     }
 }
@@ -111,7 +113,9 @@ export default {
     padding-left: 70px;
 }
 .column.is-6.station {
+    padding: 0;
     padding-top: 20px;
+    
 }
 .title.is-4 {
     margin-bottom: 0px;
