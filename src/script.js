@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 7777;
 
 let go = 'ready';
+let searchData = 'ready';
 let sendUser = 'ready';
 let tp = 'ready';
 
@@ -36,6 +37,17 @@ app.post('/selectStation', function(req, res) {
         res.send(result);
         go = result;
     })  
+})
+
+app.post('/search', function(req, res) {
+    value = req.body.searchVal;
+    console.log(value)
+    connection.query('SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"', 
+    function(err, result) {
+        res.send(result);
+        searchData = result;
+        console.log("searchResult : "+ result);
+    })
 })
 
 app.post('/user',function(req,res) {
@@ -76,6 +88,10 @@ app.get('/selectStation', (req, res) => {
     res.json(go);
 })
 
+app.get('/search', (req, res) => {
+    res.json(searchData);
+})
+
 app.get('/login', function(req,res) {
     connection.query("SELECT * FROM user",function(err,result){
         res.send(result);
@@ -99,7 +115,6 @@ app.get('/place', function (req, res) {
         res.send(result);
     });  
 });
-
 
 app.listen(port, function() {
     console.log('Starting node.js on port ' + port);

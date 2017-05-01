@@ -1,8 +1,8 @@
 <template>
     <div class="header">
     <header class="search">
-        <div >
-            <input type="text" placeholder="Search by type..." class="search_input">
+        <div>
+            <input type="text" placeholder="Search by type..." class="search_input" v-model="search_value" @keyup.enter="search()">
         </div>
     </header>
 
@@ -12,12 +12,25 @@
 </template>
 
 <script>
-    import loginForm from './LoginForm'
-    export default {
-        components: {
-            'loginBtn': loginForm
+import loginForm from './LoginForm'
+import axios from 'axios'
+export default {
+    components: {
+        'loginBtn': loginForm
+    },
+    data() {
+        return {
+            search_value: ''
+        }
+    },
+    methods: {
+        search(){
+            axios.post('http://localhost:7777/search', {
+                searchVal : this.search_value
+            })
         }
     }
+}
     
 </script>
 
