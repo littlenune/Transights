@@ -30,6 +30,7 @@ let go = 'ready';
 let searchData = 'ready';
 let sendUser = 'ready';
 let tp = 'ready';
+let price = 'ready';
 
 app.post('/selectStation', function(req, res) {
     station = req.body.stationName;
@@ -42,7 +43,7 @@ app.post('/selectStation', function(req, res) {
 app.post('/search', function(req, res) {
     value = req.body.searchVal;
     console.log(value)
-    connection.query('SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"', 
+    connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE PlaceName IN (   SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%")))', 
     function(err, result) {
         res.send(result);
         searchData = result;
@@ -65,18 +66,32 @@ app.post('/regisUser',function(req,res) {
         });
 })
 
-app.post('/timeandprice', function(req,res) {
-    dept = req.body.dept;
-    arri = req.body.arri;
-    connection.query('SELECT price.'+ arri + ' as price , timetable.'+ arri +' as time FROM price , timetable WHERE price.station = "' + dept +'" and timetable.station = "'+ dept + '"' , function(err, result) {
-       
+app.post('/time', function(req,res) {
+    let dept = req.body.dept;
+    let arri = req.body.arri;
+    connection.query('SELECT t2.time, t2.stationID as arri , price.station as dept  FROM price, ((time as t1 NATURAL JOIN btsstation as b1) CROSS JOIN (time as t2 NATURAL JOIN btsstation as b2)) WHERE b1.stationName = "' + dept + '" and b2.stationName = "' + arri + '" AND price.station = t1.stationID' , function(err, result) {
         res.send(result);
         tp = result;
     })
 })
 
+app.post('/price', (req, res) => {
+    let dept = req.body.dept;
+    let arri = req.body.arri;
+    console.log('post price' + dept + " " + arri )
+    connection.query('SELECT price.' + arri + ' as pc FROM price WHERE price.station = "' + dept + '"', (err, result) => {
+        res.send(result);
+        p = result;
+    })
+    
+})
 
-app.get('/timeandprice', function(req,res) {
+app.get('/price', (req, res) => {
+    res.json(price);
+})
+
+
+app.get('/time', function(req,res) {
     res.json(tp);
 })
 

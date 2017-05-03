@@ -27,6 +27,9 @@ export default {
         search(){
             axios.post('http://localhost:7777/search', {
                 searchVal : this.search_value
+            }).then( response => {
+                this.$emit('searcdDataFromHeader' , response.data )
+                console.log(response.data)
             })
         }
     }

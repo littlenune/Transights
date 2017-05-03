@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <navbar :bts= "btsStation" @selectToGo="goStation = $event" @searchData="placeData = $event"></navbar>
-    <headerBar></headerBar>
+    <headerBar @searcdDataFromHeader="placeData = $event"></headerBar>
     <mainPage :placeData="placeData" :goStation="goStation"></mainPage>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       btsStation: [],
-      placeData: [], // not use
+      placeData: [],
       goStation: ''
     }
   },
