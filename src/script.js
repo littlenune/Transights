@@ -33,8 +33,8 @@ let tp = 'ready';
 let p = 'ready';
 
 app.post('/selectStation', function(req, res) {
-    station = req.body.stationName;
-    connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE stationName = "' + station + '"', function(err, result) {
+    let station = req.body.stationName;
+    connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place WHERE btsstation.stationName = "'+ station + '" GROUP BY placeID ORDER BY avgRate DESC', function(err, result) {
         res.send(result);
         go = result;
     })  
@@ -43,7 +43,7 @@ app.post('/selectStation', function(req, res) {
 app.post('/search', function(req, res) {
     value = req.body.searchVal;
     console.log(value)
-    connection.query('SELECT * FROM btsStation NATURAL JOIN place WHERE PlaceName IN (   SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%")))', 
+    connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsStation NATURAL JOIN place WHERE PlaceName IN ( SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"))) GROUP BY placeID ORDER BY avgRate DESC', 
     function(err, result) {
         res.send(result);
         searchData = result;
@@ -126,7 +126,7 @@ app.get('/bts', function (req, res) {
 });
 
 app.get('/place', function (req, res) {
-    connection.query("SELECT * , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place  GROUP BY placeID ORDER BY avgRate DESC ", function(err, result){
+    connection.query("SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place  GROUP BY placeID ORDER BY avgRate DESC ", function(err, result){
         res.send(result);
     });  
 });
