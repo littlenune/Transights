@@ -74,8 +74,13 @@ export default {
     },
     methods: {
         open: function(which, e) {
-            e.preventDefault();
-            this.active = which;
+            if ( this.btn == "Logout") {
+                this.btn = "Login"
+            }
+            else { 
+                e.preventDefault();
+                this.active = which;
+            }
         },
         sendUser() {
             axios.post('http://localhost:7777/user', {
@@ -89,7 +94,8 @@ export default {
                         this.loginBtn = "Done"
                         this.close()
                         this.btn = "Logout"
-                    } else {
+                    } 
+                    else {
                         this.loginBtn = "Failed"
                     }
                 })
