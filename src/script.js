@@ -30,7 +30,7 @@ let go = 'ready';
 let searchData = 'ready';
 let sendUser = 'ready';
 let tp = 'ready';
-let price = 'ready';
+let p = 'ready';
 
 app.post('/selectStation', function(req, res) {
     station = req.body.stationName;
@@ -87,7 +87,7 @@ app.post('/price', (req, res) => {
 })
 
 app.get('/price', (req, res) => {
-    res.json(price);
+    res.json(p);
 })
 
 

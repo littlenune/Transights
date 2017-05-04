@@ -58,7 +58,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Time (Min)</p>
-              <p class="title">{{ dataCal[0].time }}</p>
+              <p class="title">{{ this.dataCal[0].time }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -127,9 +127,10 @@ export default {
           arri : this.dataCal[0].arri
         }).then( response2 => {
           this.price = response2.data[0].pc
+          this.calculate = true;
         })
       })
-      this.calculate = true;
+      
     }
   }
 }
