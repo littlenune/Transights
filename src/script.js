@@ -69,7 +69,7 @@ app.post('/regisUser',function(req,res) {
 app.post('/time', function(req,res) {
     let dept = req.body.dept;
     let arri = req.body.arri;
-    connection.query('SELECT t2.time, t2.stationID as arri , price.station as dept  FROM price, ((time as t1 NATURAL JOIN btsstation as b1) CROSS JOIN (time as t2 NATURAL JOIN btsstation as b2)) WHERE b1.stationName = "' + dept + '" and b2.stationName = "' + arri + '" AND price.station = t1.stationID' , function(err, result) {
+    connection.query('SELECT t1.stationID as arri, t2.stationID as dept , ABS(t1.time - t2.time) as estimated FROM price, ((time as t1 NATURAL JOIN btsstation as b1)  JOIN (time as t2 NATURAL JOIN btsstation as b2)) WHERE b1.stationName = "' + dept + '" and b2.stationName = "' + arri + '" AND price.station = t1.stationID' , function(err, result) {
         res.send(result);
         tp = result;
     })
