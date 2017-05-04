@@ -58,7 +58,7 @@
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Time (Min)</p>
-              <p class="title">{{ this.dataCal[0].time }}</p>
+              <p class="title">{{ this.dataCal[0].estimated }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -72,7 +72,6 @@
     </Collapse>
   </div>
   </nav>
-  
 </div>
 </template>
 
@@ -102,19 +101,11 @@ export default {
       this.$emit('selectToGo', this.selectStation)
       axios.post('http://localhost:7777/selectStation', {
         stationName: this.selectStation
+      }).then(response => {
+        axios.get('http://localhost:7777/selectStation').then(response => {
+          this.$emit('searchData', response.data )
+        })
       })
-      this.sleep(500).then(() => {
-        this.nextGo()
-      })
-    },
-    nextGo(){
-      axios.get('http://localhost:7777/selectStation').then(response => {
-        this.$emit('searchData', response.data )
-        console.log('sent from navbar')
-      })
-    },
-    sleep(ms){
-      return new Promise(resolve => setTimeout(resolve, ms));
     },
     calculateTP(){
       axios.post('http://localhost:7777/time', {
@@ -130,11 +121,9 @@ export default {
           this.calculate = true;
         })
       })
-      
     }
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
