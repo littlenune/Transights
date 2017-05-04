@@ -76,6 +76,12 @@ export default {
         open: function(which, e) {
             if ( this.btn == "Logout") {
                 this.btn = "Login"
+                this.loginUser = ''
+                this.loginPassword = ''
+                this.registerName = ''
+                this.registerLastname = ''
+                this.registerUsername = ''
+                this.registerPassword = ''
             }
             else { 
                 e.preventDefault();
@@ -97,9 +103,21 @@ export default {
                     } 
                     else {
                         this.loginBtn = "Failed"
+                        this.loginUser = ''
+                        this.loginPassword = ''
                     }
                 })
             })
+        },
+        resetAll() {
+            this.loginUser = ''
+            this.loginPassword = ''
+            this.registerName = ''
+            this.registerLastname = ''
+            this.registerUsername = ''
+            this.registerPassword = ''
+            this.loginBtn = "Login"
+            this.regisBtn = "Register"
         },
         regisUser() {
             axios.post('http://localhost:7777/regisUser', {
@@ -118,6 +136,7 @@ export default {
         },
         close() {
             this.active = false
+            this.resetAll()
         },
         flip: function(which, e) {
             e.preventDefault();
