@@ -31,7 +31,6 @@
             </div>
         </div>
 </div>
-
 </template>
 
 <script>
@@ -103,8 +102,7 @@ export default {
                     } 
                     else {
                         this.loginBtn = "Failed"
-                        this.loginUser = ''
-                        this.loginPassword = ''
+                        this.resetAll()
                     }
                 })
             })
@@ -118,6 +116,7 @@ export default {
             this.registerPassword = ''
             this.loginBtn = "Login"
             this.regisBtn = "Register"
+            this.dataLogin = []
         },
         regisUser() {
             axios.post('http://localhost:7777/regisUser', {
