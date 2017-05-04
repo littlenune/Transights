@@ -1,7 +1,7 @@
 <template>
     <div class="review">
         <p class="title is-4">Reviews
-            <star-rating class="starrate":star-size="20" :read-only="true" :show-rating="true" :increment="0.1" :rating="4.2"></star-rating>
+            <star-rating class="starrate":star-size="20" :read-only="true" :show-rating="true" :increment="0.1" :rating="rate"></star-rating>
         </p>
         <ReviewItem></ReviewItem>
         <ReviewInput></ReviewInput>
@@ -14,6 +14,7 @@ import ReviewItem from './ReviewItem.vue'
 import ReviewInput from './ReviewInput.vue'
 
 export default {
+    props: ['rate'],
     components: {
         StarRating,
         ReviewItem,

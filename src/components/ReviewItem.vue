@@ -58,6 +58,7 @@ export default {
     methods: {
         editMsg(){
             this.edit = true
+            this.editComment = this.comment
             this.visiblePopup()
         },
         cancelEdit(){
