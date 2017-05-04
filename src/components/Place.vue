@@ -17,7 +17,7 @@
                                     <p class="subtitle is-6">@{{ item.stationName }} Station</p>
                                 </div>
                                 <div class="column is-6">
-                                    <star-rating :star-size="30" :read-only="true" :show-rating="false" :increment="0.1" :rating="5"></star-rating>
+                                    <star-rating :star-size="30" :read-only="true" :show-rating="false" :increment="0.1" :rating=" item.avgRate "></star-rating>
                                 </div>
                             </div>
                         </div>

@@ -126,7 +126,7 @@ app.get('/bts', function (req, res) {
 });
 
 app.get('/place', function (req, res) {
-    connection.query("SELECT * FROM btsStation NATURAL JOIN place", function(err, result){
+    connection.query("SELECT * , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place  GROUP BY placeID ORDER BY avgRate DESC ", function(err, result){
         res.send(result);
     });  
 });
