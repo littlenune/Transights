@@ -30,13 +30,14 @@
             <a class="button" :class="{'is-loading' : isLoading()}" @click="loadmore()" v-if="checkLoad()">Load More</a>
             <span v-else>End of result</span>
         </div>
-        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" @closeModal="activePlace = $event"></placeModal>
+        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" :dataPlaceCon="dataPlaceCon" @closeModal="activePlace = $event"></placeModal>
     </div>  
 </template>
 
 <script>
 import StarRating from 'vue-star-rating'
 import placeModal from './PlaceModal.vue'
+import axios from 'axios'
 export default {
     props: ['placeData', 'goStation'],
     components: {
@@ -49,7 +50,8 @@ export default {
             numberOfList: 10,
             loadingState: false,
             activePlace: false,
-            dataPlace: []
+            dataPlace: [],
+            dataPlaceCon: [{}]
         }
     },
     methods: {
@@ -77,7 +79,13 @@ export default {
         },
         activeModal(item) {
             this.activePlace = true
-            this.dataPlace = item
+            axios.post('http://localhost:7777/placeModal', {
+                placeName: item.PlaceName
+            }).then(response => {
+                console.log(response.data)
+                this.dataPlaceCon = response.data
+                this.dataPlace = item
+            })
         }
     }
 }

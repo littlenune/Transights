@@ -9,17 +9,17 @@
                             <img :src="dataPlace.imgsrc">
                         </figure>
                         <div class="detail">
-                            <p class="title is-3">{{dataPlace.PlaceName}}</p>
-                            <p class="subtitle is-5">@{{dataPlace.stationName}} Station</p>
-                            <p class="subtitle is-6">Description</p>
-                            <p> TYPE : Shopping Mall</p>
-                            <p> OPEN HOUR 10:00 - 18:00 </p>
-                            <p>TEL : 02XXXXXXX</p>
-                            <p>Website : www.transights.com</p>
+                            <p class="title is-3">{{ dataPlace.PlaceName }}</p>
+                            <p class="subtitle is-5">@{{ dataPlace.stationName }} Station</p>
+                            <p class="subtitle is-6"> {{ dataPlaceCon[0].DES }}</p>
+                            <p> TYPE : {{ dataPlaceCon[0].TYPE }}</p>
+                            <p> OPEN HOUR {{ dataPlaceCon[0].OPEN }} - {{ dataPlaceCon[0].CLOSE }} </p>
+                            <p>TEL : {{ dataPlaceCon[0].TEL }}</p>
+                            <p>Website : <a :href="dataPlaceCon[0].WEB"> {{ dataPlaceCon[0].WEB }}</a> </p>
                         </div>
                     </div>
                     <div class="column is-5">
-                        <review></review>            
+                        <review :rate="dataPlace.avgRate"></review>            
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
 <script>
 import review from './Review.vue'
 export default {
-    props: ['activePlace', 'dataPlace'],
+    props: ['activePlace', 'dataPlace', 'dataPlaceCon'],
     components: {
         review
     },

@@ -86,6 +86,13 @@ app.post('/price', (req, res) => {
     
 })
 
+app.post('/placeModal', (req, res) => {
+    let placeName = req.body.placeName;
+    connection.query('SELECT * FROM description WHERE description.PlaceName = "'+ placeName +'"', (err, result) => {
+        res.send(result)
+    })
+})
+
 app.get('/price', (req, res) => {
     res.json(p);
 })
