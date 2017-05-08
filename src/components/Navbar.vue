@@ -54,11 +54,11 @@
           </p>
         </div>
         <a class="button is-dark" v-on:click="calculateTP()">CALCULATE</a>    
-        <nav class="level" v-if="calculate">
+        <nav class="level" v-if="this.calculate">
           <div class="level-item has-text-centered">
             <div>
               <p class="heading">Time (Min)</p>
-              <p class="title">{{ this.dataCal[0].estimated }}</p>
+              <p class="title">{{ this.time }}</p>
             </div>
           </div>
           <div class="level-item has-text-centered">
@@ -92,7 +92,7 @@ export default {
       fromStation: '',
       toStation: '',
       calculate: false,
-      dataCal : [],
+      time : '',
       price : ''
     }
   },
@@ -112,15 +112,16 @@ export default {
         dept : this.fromStation,
         arri : this.toStation
       }).then( response => {
-        this.dataCal = response.data
+        this.time = response.data[0].estimated
         axios.post('http://localhost:7777/price', {
-          dept : this.dataCal[0].dept,
-          arri : this.dataCal[0].arri
+            dept : this.fromStation,
+            arri : this.toStation
         }).then( response2 => {
-          this.price = response2.data[0].pc
-          this.calculate = true;
+            this.price = response2.data[0].fare
+            this.calculate = true
         })
       })
+      
     }
   }
 }
