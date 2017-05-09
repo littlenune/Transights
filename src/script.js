@@ -7,7 +7,7 @@ const mysql  = require('mysql');
         database: 'transights'
     });
 
-    connection.connect(function(err){
+    connection.connect((err) => {
         if(!!err)
             console.log('Error');
         else
@@ -32,7 +32,7 @@ let sendUser = 'ready';
 let tp = 'ready';
 let p = 'ready';
 
-app.post('/selectStation', function(req, res) {
+app.post('/selectStation', (req, res) => {
     let station = req.body.stationName;
     connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place WHERE btsstation.stationName = "'+ station + '" GROUP BY placeID ORDER BY avgRate DESC', function(err, result) {
         res.send(result);
@@ -40,8 +40,8 @@ app.post('/selectStation', function(req, res) {
     })  
 })
 
-app.post('/search', function(req, res) {
-    value = req.body.searchVal;
+app.post('/search', (req, res) => {
+    let value = req.body.searchVal;
     console.log(value)
     connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsStation NATURAL JOIN place WHERE PlaceName IN ( SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"))) GROUP BY placeID ORDER BY avgRate DESC', 
     function(err, result) {
@@ -51,22 +51,22 @@ app.post('/search', function(req, res) {
     })
 })
 
-app.post('/user',function(req,res) {
-    username = req.body.username;
+app.post('/user', (req,res) => {
+    let username = req.body.username;
     connection.query('SELECT * FROM user WHERE userName = "'+ username + '"', function(err,result) {
         res.send(result);
         sendUser = result;
     })
 })
 
-app.post('/regisUser',function(req,res) {
-    var user = {userID:req.body.name, userName:req.body.username, password:req.body.password, name:req.body.name, lastname:req.body.lastname};
+app.post('/regisUser', (req,res) => {
+    let user = { userID:req.body.name, userName:req.body.username, password:req.body.password, name:req.body.name, lastname:req.body.lastname };
         connection.query('INSERT INTO user SET ?',user,function(err,res) {
           if (err) throw err;      
         });
 })
 
-app.post('/time', function(req,res) {
+app.post('/time', (req,res) => {
     let dept = req.body.dept;
     let arri = req.body.arri;
     connection.query('SELECT ABS(t1.time - t2.time) as estimated FROM ((time as t1 NATURAL JOIN btsstation as b1)  JOIN (time as t2 NATURAL JOIN btsstation as b2)) WHERE b1.stationName = "'+  arri + '" AND b2.stationName = "'+ dept +'"' , function(err, result) {
@@ -92,12 +92,20 @@ app.post('/placeModal', (req, res) => {
     })
 })
 
+app.post('/inputReview', (req,res) => {
+    console.log('input review process')
+    let review = { userID:req.body.userID, placeID:req.body.placeID, Review:req.body.review, Rate:req.body.rate }
+    connection.query('INSERT INTO review SET ?',review ,function(err,res) {
+        if ( err ) throw err;
+    })
+})
+
 app.get('/price', (req, res) => {
     res.json(p);
 })
 
 
-app.get('/time', function(req,res) {
+app.get('/time', (req, res) => {
     res.json(tp);
 })
 
@@ -113,26 +121,26 @@ app.get('/search', (req, res) => {
     res.json(searchData);
 })
 
-app.get('/login', function(req,res) {
+app.get('/login', (req,res) => {
     connection.query("SELECT * FROM user",function(err,result){
         res.send(result);
     });
 })
 
-app.get('/address', function (req, res) {
+app.get('/address', (req, res) => {
     connection.query("SELECT * FROM address", function(err, result){
          res.send(result);
     });
 });
 
-app.get('/bts', function (req, res) {
+app.get('/bts', (req, res) => {
     connection.query("SELECT * FROM btsstation", function(err, result){
         res.send(result);
     });
 });
 
-app.get('/place', function (req, res) {
-    connection.query("SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place  GROUP BY placeID ORDER BY avgRate DESC ", function(err, result){
+app.get('/place', (req, res) => {
+    connection.query("SELECT placeID, stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place  GROUP BY placeID ORDER BY avgRate DESC ", function(err, result){
         res.send(result);
     });  
 });

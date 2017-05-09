@@ -36,6 +36,7 @@ import StarRating from 'vue-star-rating'
 import axios from 'axios'
 
 export default {
+    props: ['dataPlace'],
     components: {
         StarRating
     },
@@ -48,6 +49,22 @@ export default {
     methods: {
         submit() {
             console.log("comment : " + this.commentData + " starrate : " + this.rating);
+            axios.get('http://localhost:7777/user').then(response => {
+                if(response.data[0].userID != null){
+                    console.log('user not null')
+                    axios.post('http://localhost:7777/inputReview', {
+                        userID : response.data[0].userID,
+                        placeID : this.dataPlace.placeID,
+                        review : this.commentData,
+                        rate : this.rating
+                    }).then( response => {
+                        console.log('comment complete')
+                    })
+                    
+                } else {
+                    console.log('please login first before review!')
+                }
+            })
         },
         setRating: function(rating) {
           this.rating = rating;
