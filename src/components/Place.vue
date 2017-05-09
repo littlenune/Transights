@@ -30,7 +30,7 @@
             <a class="button" :class="{'is-loading' : isLoading()}" @click="loadmore()" v-if="checkLoad()">Load More</a>
             <span v-else>End of result</span>
         </div>
-        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" :dataPlaceCon="dataPlaceCon" @closeModal="activePlace = $event"></placeModal>
+        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" :dataPlaceCon="dataPlaceCon" :dataReview="dataReview"@closeModal="activePlace = $event"></placeModal>
     </div>  
 </template>
 
@@ -51,7 +51,8 @@ export default {
             loadingState: false,
             activePlace: false,
             dataPlace: [],
-            dataPlaceCon: [{}]
+            dataPlaceCon: [{}],
+            dataReview: [{}]
         }
     },
     methods: {
@@ -82,9 +83,13 @@ export default {
             axios.post('http://localhost:7777/placeModal', {
                 placeName: item.PlaceName
             }).then(response => {
-                console.log(response.data)
                 this.dataPlaceCon = response.data
                 this.dataPlace = item
+                axios.post('http://localhost:7777/showReview', {
+                    placeID : item.placeID
+                }).then(response => {
+                    this.dataReview = response.data
+                })
             })
         }
     }

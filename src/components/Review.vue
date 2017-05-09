@@ -3,8 +3,8 @@
         <p class="title is-4">Reviews
             <star-rating class="starrate":star-size="20" :read-only="true" :show-rating="true" :increment="0.1" :rating="dataPlace.avgRate"></star-rating>
         </p>
-        <ReviewItem></ReviewItem>
-        <ReviewInput :dataPlace="dataPlace"></ReviewInput>
+        <ReviewInput class="inputReview":dataPlace="dataPlace"></ReviewInput>
+        <ReviewItem :dataReview="dataReview"></ReviewItem>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ import ReviewItem from './ReviewItem.vue'
 import ReviewInput from './ReviewInput.vue'
 
 export default {
-    props: ['dataPlace'],
+    props: ['dataPlace', 'dataReview'],
     components: {
         StarRating,
         ReviewItem,
@@ -38,4 +38,8 @@ export default {
         }
     }
 }
+.inputReview {
+    padding-bottom: 20px;
+}
+
 </style>

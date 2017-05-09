@@ -1,20 +1,16 @@
 <template>
-    <article class="media">
-        <figure class="media-left">
-            <p class="image is-64x64">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
-            </p>
-        </figure>
+    <div>
+    <article class="media" v-for="item in dataReview">
         <div class="media-content">
             <div class="content">
                 <p class="review-name">
-                    <strong>John Smith</strong> <small>@johnsmith</small>
-                    <star-rating class="staritem":star-size="10" :read-only="true" :show-rating="false" :increment="1" :rating="5"></star-rating>
+                    <strong>{{item.name}} {{item.lastName}}</strong> <small>@{{item.userName}}</small>
+                    <star-rating class="staritem":star-size="10" :read-only="true" :show-rating="false" :increment="1" :rating="item.Rate"></star-rating>
                 <br></p>
                 <p v-if="!edit">
-                    {{ comment }} <small v-if="edited">- Edited</small>
+                    {{ item.Review }} <small v-if="edited">- Edited</small>
                 </p>
-                <textarea v-else v-model="editComment"class="textarea"> {{ comment }}</textarea>
+                <textarea v-else v-model="editComment"class="textarea"> {{ item.Review }}</textarea>
             </div>
             <div v-if="edit">
                 <span class="button is-dark" @click="saveEdit()">Save</span>
@@ -34,6 +30,7 @@
             <!-- <button class="delete"></button> -->
         </div>
     </article>
+    </div>
 </template>
 
 <script>
@@ -41,6 +38,7 @@ import StarRating from 'vue-star-rating'
 import dropdown from 'vue-my-dropdown';
 
 export default {
+    props: ['dataReview'],
     components: {
         StarRating,
         dropdown

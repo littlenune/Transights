@@ -97,11 +97,18 @@ app.post('/placeModal', (req, res) => {
     })
 })
 
-app.post('/inputReview', (req,res) => {
+app.post('/inputReview', (req, res) => {
     console.log('input review process')
     let review = { userID:req.body.userID, placeID:req.body.placeID, Review:req.body.review, Rate:req.body.rate }
     connection.query('INSERT INTO review SET ?',review ,function(err,res) {
         if ( err ) throw err;
+    })
+})
+
+app.post('/showReview', (req, res) => {
+    let placeID = req.body.placeID;
+    connection.query('SELECT review.userID, review.placeID, review.Review, review.Rate, user.userName, user.name, user.lastname FROM `review` NATURAL JOIN `user` WHERE review.userID = user.userID AND placeID = "'+ placeID +'"', (err, result) => {
+        res.send(result);
     })
 })
 
