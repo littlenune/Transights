@@ -60,10 +60,15 @@ app.post('/user', (req,res) => {
 })
 
 app.post('/regisUser', (req,res) => {
-    let user = { userID:req.body.name, userName:req.body.username, password:req.body.password, name:req.body.name, lastname:req.body.lastname };
+    let count = 0;
+    connection.query('SELECT COUNT(userID)+1 as count FROM user',function(err,res) {
+        count = res[0].count;
+        let user = { userID:'U' + count, userName:req.body.username, password:req.body.password, name:req.body.name, lastname:req.body.lastname };
         connection.query('INSERT INTO user SET ?',user,function(err,res) {
           if (err) throw err;      
         });
+    });
+    
 })
 
 app.post('/time', (req,res) => {
