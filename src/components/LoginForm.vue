@@ -88,23 +88,19 @@ export default {
             }
         },
         sendUser() {
+            this.loginBtn = "Loggin in..."
             axios.post('http://localhost:7777/user', {
                 username: this.loginUser
-            })
-            this.loginBtn = "Loggin in..."
-            this.sleep(500).then(() => {
-                axios.get('http://localhost:7777/user').then(response => {
-                    this.dataLogin = response.data
-                    if ( this.dataLogin[0] != null && this.loginPassword == this.dataLogin[0].password ){
-                        this.loginBtn = "Done"
-                        this.close()
-                        this.btn = "Logout"
-                    } 
-                    else {
-                        this.loginBtn = "Failed"
-                        this.resetAll()
-                    }
-                })
+            }).then(response => {
+                this.dataLogin = response.data
+                if ( this.dataLogin[0] != null && this.loginPassword == this.dataLogin[0].password ){
+                    this.loginBtn = "Done"
+                    this.close()
+                    this.btn = "Logout"
+                } else {
+                    this.loginBtn = "Failed"
+                    this.resetAll()
+                }
             })
         },
         resetAll() {

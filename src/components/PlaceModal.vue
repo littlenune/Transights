@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="column is-5">
-                        <review :rate="dataPlace.avgRate"></review>            
+                        <review :dataPlace="dataPlace" ></review>            
                     </div>
                 </div>
             </div>
