@@ -13,19 +13,20 @@
                 <textarea v-else v-model="editComment"class="textarea"> {{ item.Review }}</textarea>
             </div>
             <div v-if="edit">
-                <span class="button is-dark" @click="saveEdit()">Save</span>
+                <span class="button is-dark" @click="saveEdit(item)">Save</span>
                 <span class="button is-dark" @click="cancelEdit()">Cancel</span>
             </div>
         </div>
-        <div class="media-right">
+        <div class="media-right" v-if="checkSameUser(item)">
+            <button @click="editMsg(item)">Edit</button>
             <dropdown :visible="visible" :position="position" @clickOut="visible = false">
                 <button class="delete link" @click="visiblePopup()"></button>
-                <div class="dialog" slot="dropdown">
+                <!-- <div class="dialog" slot="dropdown">
                     <aside class="menu"><ul class="menu-list">
-                        <li><a @click="editMsg">Edit</a></li>
+                        <li><a @click="editMsg(item)">Edit</a></li>
                         <li><a>Delete</a></li>
                     </ul></aside>
-                </div>
+                </div> -->
             </dropdown>
             <!-- <button class="delete"></button> -->
         </div>
@@ -38,7 +39,7 @@ import StarRating from 'vue-star-rating'
 import dropdown from 'vue-my-dropdown';
 
 export default {
-    props: ['dataReview'],
+    props: ['dataReview', 'dataUserLogin'],
     components: {
         StarRating,
         dropdown
@@ -47,16 +48,15 @@ export default {
         return {
             visible: false,
             position: [ "center", "bottom", "right", "top" ],
-            comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.',
             edit: false,
             edited: false,
             editComment: ''
         }
     },
     methods: {
-        editMsg(){
+        editMsg(item){
             this.edit = true
-            this.editComment = this.comment
+            this.editComment = item.Review
             this.visiblePopup()
         },
         cancelEdit(){
@@ -65,10 +65,17 @@ export default {
         visiblePopup(){
             this.visible = !this.visible
         },
-        saveEdit(){
+        saveEdit(item){
             this.edited = true
             this.edit = false
-            this.comment = this.editComment
+            item.Review = this.editComment
+        },
+        checkSameUser(item){
+            console.log("Login by : " + this.dataUserLogin[0].userID + "Item review user ID : " + item.userID)
+            if(this.dataUserLogin[0].userID == item.userID)
+                return true
+            else 
+                return false
         }
     }
 }

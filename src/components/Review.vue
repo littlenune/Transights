@@ -4,7 +4,7 @@
             <star-rating class="starrate":star-size="20" :read-only="true" :show-rating="true" :increment="0.1" :rating="dataPlace.avgRate"></star-rating>
         </p>
         <ReviewInput class="inputReview":dataPlace="dataPlace"></ReviewInput>
-        <ReviewItem :dataReview="dataReview"></ReviewItem>
+        <ReviewItem :dataReview="dataReview" :dataUserLogin="dataUserLogin"></ReviewItem>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ import ReviewItem from './ReviewItem.vue'
 import ReviewInput from './ReviewInput.vue'
 
 export default {
-    props: ['dataPlace', 'dataReview'],
+    props: ['dataPlace', 'dataReview', 'dataUserLogin'],
     components: {
         StarRating,
         ReviewItem,

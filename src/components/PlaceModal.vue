@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="column is-5">
-                        <review :dataPlace="dataPlace" :dataReview="dataReview"></review>            
+                        <review :dataPlace="dataPlace" :dataReview="dataReview" :dataUserLogin="dataUserLogin"></review>            
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
 <script>
 import review from './Review.vue'
 export default {
-    props: ['activePlace', 'dataPlace', 'dataPlaceCon', 'dataReview'],
+    props: ['activePlace', 'dataPlace', 'dataPlaceCon', 'dataReview', 'dataUserLogin'],
     components: {
         review
     },

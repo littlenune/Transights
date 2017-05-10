@@ -30,7 +30,7 @@
             <a class="button" :class="{'is-loading' : isLoading()}" @click="loadmore()" v-if="checkLoad()">Load More</a>
             <span v-else>End of result</span>
         </div>
-        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" :dataPlaceCon="dataPlaceCon" :dataReview="dataReview"@closeModal="activePlace = $event"></placeModal>
+        <placeModal :activePlace="activePlace" :dataPlace="dataPlace" :dataPlaceCon="dataPlaceCon" :dataReview="dataReview" :dataUserLogin="dataUserLogin"@closeModal="activePlace = $event"></placeModal>
     </div>  
 </template>
 
@@ -52,7 +52,8 @@ export default {
             activePlace: false,
             dataPlace: [],
             dataPlaceCon: [{}],
-            dataReview: [{}]
+            dataReview: [{}],
+            dataUserLogin: [{}]
         }
     },
     methods: {
@@ -79,7 +80,7 @@ export default {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
         activeModal(item) {
-            this.activePlace = true
+            
             axios.post('http://localhost:7777/placeModal', {
                 placeName: item.PlaceName
             }).then(response => {
@@ -90,6 +91,11 @@ export default {
                 }).then(response => {
                     this.dataReview = response.data
                 })
+            }).then( response => {
+                axios.get('http://localhost:7777/user').then(response2 => {
+                    this.dataUserLogin = response2.data
+                })
+                this.activePlace = true
             })
         }
     }
