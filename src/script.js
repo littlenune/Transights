@@ -115,12 +115,19 @@ app.post('/showReview', (req, res) => {
 app.post('/deleteReview', (req, res) => {
     let placeID = req.body.placeID;
     let userID = req.body.userID;
-    console.log(placeID + " " + userID );
     connection.query('DELETE FROM review WHERE userID = "'+ userID +'" AND placeID = "'+ placeID +'"', (err, result) => {
         res.send(result)
     })
 })
 
+app.post('/editReview', (req, res) => {
+    let placeID = req.body.placeID;
+    let userID = req.body.userID;
+    let editReview = req.body.editReview;
+    connection.query('UPDATE review SET Review = "' + editReview + '" WHERE userID = "' + userID + '" AND placeID = "' + placeID + '"', (err, result) => {
+        res.send(result)
+    })
+})
 
 app.get('/price', (req, res) => {
     res.json(p);

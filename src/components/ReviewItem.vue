@@ -8,7 +8,7 @@
                         <star-rating class="staritem":star-size="10" :read-only="true" :show-rating="false" :increment="1" :rating="item.Rate"></star-rating>
                     <br></p>
                     <p v-if="!(edit && checkSameUser(item))">
-                        {{ item.Review }} <small v-if="edited">- Edited</small>
+                        {{ item.Review }}
                     </p>
                     <div v-else-if="checkSameUser(item)">
                         <textarea  v-model="editComment" class="textarea edit"> {{ item.Review }}</textarea>   
@@ -54,6 +54,11 @@ export default {
             this.edited = true
             this.edit = false
             item.Review = this.editComment
+            axios.post('http://localhost:7777/editReview', {
+                userID : this.dataUserLogin[0].userID,
+                placeID : this.dataPlace.placeID,
+                editReview : this.editComment
+            })
         },
         checkSameUser(item) {
             if(this.dataUserLogin[0].userID == item.userID)
@@ -78,10 +83,6 @@ export default {
     .staritem {
         padding-left: 5px;
     }
-}
-
-small {
-    color: #999999;
 }
 
 .textarea.edit {
