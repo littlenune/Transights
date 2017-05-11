@@ -49,7 +49,7 @@ export default {
                         review : this.commentData,
                         rate : this.rating
                     }).then( response2 => {
-                        // this.$emit('dataReviewInput', )
+                        this.$emit('dataReviewInput',{ review : this.commentData,  rate:this.rating })
                         this.commentData = ''
                         this.rating = 0
                     })
