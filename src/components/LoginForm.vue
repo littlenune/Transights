@@ -72,7 +72,7 @@ export default {
         }
     },
     methods: {
-        open: function(which, e) {
+        open(which, e) {
             if ( this.btn == "Logout") {
                 this.btn = "Login"
                 this.loginUser = ''
@@ -133,13 +133,13 @@ export default {
             this.active = false
             this.resetAll()
         },
-        flip: function(which, e) {
+        flip(which, e) {
             e.preventDefault();
             if (which !== this.active) {
                 this.active = which;
             }
         },
-        submit: function(which, e) {
+        submit(which, e) {
             e.preventDefault();
             this.submitted = which
             var data = {
@@ -168,13 +168,7 @@ export default {
     }
 }
 
-    
 </script>
-
-<style>
-
-
-</style>
 
 <style lang="scss">
 
