@@ -34,7 +34,7 @@ let p = 'ready';
 
 app.post('/selectStation', (req, res) => {
     let station = req.body.stationName;
-    connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place WHERE btsstation.stationName = "'+ station + '" GROUP BY placeID ORDER BY avgRate DESC', function(err, result) {
+    connection.query('SELECT placeID, stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsstation NATURAL JOIN place WHERE btsstation.stationName = "'+ station + '" GROUP BY placeID ORDER BY avgRate DESC', function(err, result) {
         res.send(result);
         go = result;
     })  
@@ -42,7 +42,7 @@ app.post('/selectStation', (req, res) => {
 
 app.post('/search', (req, res) => {
     let value = req.body.searchVal;
-    connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsStation NATURAL JOIN place WHERE PlaceName IN ( SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"))) GROUP BY placeID ORDER BY avgRate DESC', 
+    connection.query('SELECT placeID, stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsStation NATURAL JOIN place WHERE PlaceName IN ( SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"))) GROUP BY placeID ORDER BY avgRate DESC', 
     function(err, result) {
         res.send(result);
         searchData = result;
