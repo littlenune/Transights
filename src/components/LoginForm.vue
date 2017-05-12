@@ -17,30 +17,42 @@
                     <div class="links"> <a href="" @click="flip('login', $event)">Already have an account?</a></div>
                 </div>
                 <div class="form-login" :class="{ 'active': active == 'login' }" id="form-login">
-                    <div class="error-message" v-text="loginError"></div>
                     <input type="text" name="user" placeholder="Username" v-model="loginUser" @keyup.enter="submit('login', $event)">
                     <input type="password" name="password" placeholder="Password" v-model="loginPassword" @keyup.enter="submit('login', $event)">
                     <input type="submit" :class="{ 'disabled': submitted == 'login' }" @click="sendUser()" v-model="loginBtn" id="loginSubmit">
-                    <div class="links"> <a href="" @click="flip('password', $event)">Forgot your password?</a></div>
                 </div>
-                <div class="form-password" :class="{ 'active': active == 'password' }" id="form-password">
-                    <div class="error-message" v-text="passwordError"></div>
-                    <input type="text" name="email" placeholder="Email" v-model="passwordEmail" @keyup.enter="submit('password', $event)">
-                    <input type="submit" :class="{ 'disabled': submitted == 'password' }" @click="submit('password', $event)" v-model="passwordSubmit" id="passwordSubmit">
-                </div>
+            
             </div>
         </div>
 </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
+import Notification from 'vue-bulma-notification'
 
 var modal_submit_register = 'Register';
-var modal_submit_password = 'Reset Password';
 var modal_submit_login = 'Login';
 
+const NotificationComponent = Vue.extend(Notification)
+
+const openNotification = (propsData = {
+  title: '',
+  message: '',
+  type: '',
+  direction: '',
+  duration: 4500,
+  container: '.notifications'
+}) => {
+  return new NotificationComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
+
 export default {
+
     data() { 
         return {
             active: null,
@@ -48,7 +60,6 @@ export default {
 
             // Submit button text
             registerSubmit: modal_submit_register,
-            passwordSubmit: modal_submit_password,
             loginSubmit: modal_submit_login,
 
             // Modal text fields
@@ -58,14 +69,14 @@ export default {
             registerPassword: '',
             loginUser: '',
             loginPassword: '',
-            passwordEmail: '',
-
+            
             // Modal error messages
             registerError: '',
             loginError: '',
             passwordError: '',
 
             dataLogin: [],
+            dataRegis:[],
             loginBtn: "Login",
             regisBtn: "Register",
             btn: "Login"
@@ -97,9 +108,10 @@ export default {
                     this.loginBtn = "Done"
                     this.close()
                     this.btn = "Logout"
+                    this.openNotificationWithType('Login successful','Hope you enjoy the site','success')
                 } else {
-                    this.loginBtn = "Failed"
-                    this.resetAll()
+                    this.loginBtn = "Login"
+                    this.openNotificationWithType('Login failed','Please try again','danger')
                 }
             })
         },
@@ -115,15 +127,24 @@ export default {
             this.dataLogin = []
         },
         regisUser() {
-            axios.post('http://localhost:7777/regisUser', {
-                name: this.registerName,
-                lastname: this.registerLastname,
-                username: this.registerUsername,
-                password: this.registerPassword
-            })
-            this.regisBtn = "Registering..."
-            this.sleep(500).then(() => {
-                this.regisBtn = "Done"
+              axios.post('http://localhost:7777/searchUsername', {
+                username: this.registerUsername
+            }).then(response => {
+                if ( response.data[0].numUser == 0 ){
+                    this.regisBtn = "Registering..."
+                     axios.post('http://localhost:7777/regisUser', {
+                        name: this.registerName,
+                        lastname: this.registerLastname,
+                        username: this.registerUsername,
+                        password: this.registerPassword
+                    })
+                    this.regisBtn = "Registering..."
+                    this.regisBtn = "Done"
+                    this.openNotificationWithType('Register Successful','Please go to login','success')
+                }
+                else {
+                  this.openNotificationWithType('Register failed','Username has already used','danger')
+                }
             })
         },
         sleep(ms) {
@@ -139,31 +160,12 @@ export default {
                 this.active = which;
             }
         },
-        submit(which, e) {
-            e.preventDefault();
-            this.submitted = which
-            var data = {
-                form: which
-            };
-
-            switch (which) {
-                case 'register':
-                data.name = this.registerName;
-                data.lastname = this.registerLastname;
-                data.password = this.registerPassword;
-                this.$set('registerSubmit', 'Registering...');
-                break;
-                case 'login':
-                data.user = this.loginUser;
-                data.password = this.loginPassword;
-                this.$set('loginSubmit', 'Logging In...');
-                break;
-                case 'password':
-                data.lastname = this.passwordLastname;
-
-                this.$set('passwordSubmit', 'Resetting Password...')
-                break;
-            }
+        openNotificationWithType (title,message,type) {
+            openNotification({
+                title: title,
+                message: message,
+                type: type
+            })
         }
     }
 }

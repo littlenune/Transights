@@ -42,22 +42,30 @@ app.post('/selectStation', (req, res) => {
 
 app.post('/search', (req, res) => {
     let value = req.body.searchVal;
-    console.log(value)
     connection.query('SELECT stationName, PlaceName, imgsrc , AVG(review.Rate) as avgRate FROM review NATURAL JOIN btsStation NATURAL JOIN place WHERE PlaceName IN ( SELECT PlaceName FROM place WHERE place.PlaceName LIKE "%' + value + '%" UNION ( SELECT place.PlaceName FROM place WHERE place.stationID IN ( SELECT btsstation.stationID FROM btsstation WHERE btsstation.stationName LIKE "%' + value + '%"))) GROUP BY placeID ORDER BY avgRate DESC', 
     function(err, result) {
         res.send(result);
         searchData = result;
-        console.log("searchResult : "+ result);
     })
 })
 
 app.post('/user', (req,res) => {
     let username = req.body.username;
     connection.query('SELECT * FROM user WHERE userName = "'+ username + '"', function(err,result) {
-        res.send(result);
-        sendUser = result;
+            res.send(result);
+            sendUser = result;
     })
 })
+
+app.post('/searchUsername',(req,res) => {
+    let user = req.body.username;
+    connection.query('SELECT COUNT(user.userID) as numUser  FROM user WHERE user.userName = "'+user+'"',function(err,result) {
+        res.send(result);
+        sendUser = result;
+
+    })
+})
+
 
 app.post('/regisUser', (req,res) => {
     let count = 0;
@@ -98,7 +106,6 @@ app.post('/placeModal', (req, res) => {
 })
 
 app.post('/inputReview', (req, res) => {
-    console.log('input review process')
     let review = { userID:req.body.userID, placeID:req.body.placeID, Review:req.body.review, Rate:req.body.rate }
     connection.query('INSERT INTO review SET ?', review , (err, result) => {
         res.send(result);
