@@ -92,6 +92,9 @@ export default {
                 this.registerLastname = ''
                 this.registerUsername = ''
                 this.registerPassword = ''
+                axios.post('http://localhost:7777/user', {
+                username: "reset"
+            })
             }
             else { 
                 e.preventDefault();

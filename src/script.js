@@ -51,10 +51,16 @@ app.post('/search', (req, res) => {
 
 app.post('/user', (req,res) => {
     let username = req.body.username;
-    connection.query('SELECT * FROM user WHERE userName = "'+ username + '"', function(err,result) {
+    if ( username == "reset") {
+        res.send(null);
+        sendUser = null;
+    }
+    else {
+        connection.query('SELECT * FROM user WHERE userName = "'+ username + '"', function(err,result) {
             res.send(result);
             sendUser = result;
-    })
+        })
+    }
 })
 
 app.post('/searchUsername',(req,res) => {
